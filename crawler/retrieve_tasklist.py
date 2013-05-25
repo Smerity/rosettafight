@@ -11,8 +11,8 @@ Note: written as one-off code. No testing. Not proper code use.
 # Python
 import codecs
 import json
-import requests
 # Third Party
+import requests
 # Local Files
 from crawler_settings import CRAWLER_HEADERS
 
