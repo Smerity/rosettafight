@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Rosetta Fight</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <script src="http://twitter.github.io/bootstrap/assets/js/jquery.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-tab.js"></script>
+    <!--[if lt IE 9]>
+      <script src="http://twitter.github.io/bootstrap/assets/js/html5shiv.js"></script>
+    <![endif]-->
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script>
+    {% block extra_css %}{% endblock %}
+    {% block extra_js %}{% endblock %}
+  </head>
+
+  <body>
+    <div class="container-fluid">
+    {% block content %}
+      <div class="row-fluid">
+        <h2>Rosetta Fight</h2>
+        <form class="form-search">
+          <select name="task">
+          {% for task in tasks %}
+            <option{% if selected_task == task %} selected{% endif %}>{{ task }}</option>
+          {% endfor %}
+          </select>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      <p>
+        Languages with solutions:
+          {% for task in task_solutions %}<span class="text-success">{{ task.title() }}</span>{% if not loop.last %}, {% endif %}{% endfor %}
+      </p>
+      <div class="row-fluid">
+        <div class="span6">
+          {% if codeA %}
+          <h3>Python</h3>
+          <ul class="nav nav-tabs">
+            {% for sol in codeA %}
+            <li {% if loop.index == 1 %}class="active"{% endif %}><a href="#python-{{ loop.index }}" data-toggle="tab">Solution #{{ loop.index }}</a></li>
+            {% endfor %}
+          </ul>
+          <div class="tab-content">
+          {% for sol in codeA %}
+            <div class="tab-pane{% if loop.index == 1 %} active{% endif %}" id="python-{{ loop.index }}">
+              <pre class="prettyprint pre-scrollable">{{ sol }}</pre>
+            </div>
+          {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        <div class="span6">
+          {% if codeB %}
+          <h3>Go</h3>
+          <ul class="nav nav-tabs">
+            {% for sol in codeB %}
+            <li {% if loop.index == 1 %}class="active"{% endif %}><a href="#go-{{ loop.index }}" data-toggle="tab">Solution #{{ loop.index }}</a></li>
+            {% endfor %}
+          </ul>
+          <div class="tab-content">
+          {% for sol in codeB %}
+            <div class="tab-pane{% if loop.index == 1 %} active{% endif %}" id="go-{{ loop.index }}">
+              <pre class="prettyprint pre-scrollable">{{ sol }}</pre>
+            </div>
+          {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endblock %}
+    </div>
+  </body>
+</html>
