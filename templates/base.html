@@ -23,7 +23,7 @@
       <div class="row-fluid">
         <h2>Rosetta Fight</h2>
         <form class="form-search">
-          <select name="task">
+          <select name="task" class="span3">
           {% for task in tasks %}
             <option{% if selected_task == task %} selected{% endif %}>{{ task }}</option>
           {% endfor %}
@@ -31,10 +31,17 @@
           <button type="submit">Submit</button>
         </form>
       </div>
-      <p>
-        Languages with solutions:
-          {% for task in task_solutions %}<span class="text-success">{{ task.title() }}</span>{% if not loop.last %}, {% endif %}{% endfor %}
+      <p class="well">
+        <i>Popular problems:</i>
+          {% for task in ['Arrays', 'Assertions', 'Chat server', 'Check that file exists', 'Count occurrences of a substring', 'Factorial', 'FizzBuzz', 'Hello world/Text', 'Hello world/Web server', 'Letter frequency', 'Read entire file', 'Regular expressions', 'Repeat a string', 'String case', 'String interpolation (included)', 'String length'] %}
+          <a href="?task={{task}}">{{ task }}</a>{% if not loop.last %}, {% endif %}
+          {% endfor %}
       </p>
+      {% if selected_task %}
+      <p>
+        Viewing <b>{{ selected_task }}</b> which has solutions in {{ task_solutions.__len__() }}  {% if task_solutions > 1 %}different languages{% else %}language{% endif %}.
+      </p>
+      {% endif %}
       <div class="row-fluid">
         <div class="span6">
           {% if codeA %}
