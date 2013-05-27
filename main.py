@@ -6,6 +6,7 @@ Dynamic web view for local testing
 from __future__ import print_function, unicode_literals
 # Python stdlib
 import codecs
+import re
 # Third Party
 import flask
 # Local files
@@ -20,6 +21,29 @@ try:
   solutions = flask.json.loads(open('solutions.json').read())
 except IOError:
   solutions = []
+
+
+def simple_name(s):
+  return re.sub('[^A-Za-z0-9]', '', s)
+
+
+@app.route('/data/tasklist.json')
+def tasklist_json():
+  return flask.jsonify(tasklist=tasks)
+
+
+@app.route('/data/tasks/<simple_title>.json')
+def solutions_json(simple_title):
+  title = None
+  for x in tasks:
+    h = simple_name(x)
+    if h == simple_title:
+      title = x
+      break
+  if title not in solutions:
+    return 'Given task does not exist', 404
+  sols = solutions[title]
+  return flask.jsonify(solutions=sols)
 
 
 @app.route('/')
