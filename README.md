@@ -33,6 +33,17 @@ Lang: go
 =-=-=-=-=-=-=-=-=-=-
 ```
 
+Testing
+-------
+
+The Flask backend is responsible for generating the static JSON solution files from the raw data.
+Testing in there is backed with unittest, mock and Flask-Testing.
+To run these tests, `python tests.py`.
+
+The AngularJS frontend serves the content up to users.
+Testing is done using AngularJS Mock and the Jasmine test runner.
+To run these, run the local web server via `python main.py` and then visit `/test` in a browser.
+
 Note
 ----
 
