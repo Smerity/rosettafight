@@ -27,26 +27,6 @@ class RosettaTest(TestCase):
 
   @mock.patch('main.solutions', solutions)
   @mock.patch('main.tasks', tasks)
-  def test_index(self):
-    rv = self.client.get(flask.url_for('index'))
-    self.assert200(rv)
-    self.assertIn('HelloStr', unicode(rv.data, encoding='utf-8'))
-    self.assertIn('Integer64', unicode(rv.data, encoding='utf-8'))
-
-  def test_view_non_existing_task(self):
-    rv = self.client.get(flask.url_for('index', task='FourthWall'))
-    self.assert404(rv)
-
-  @mock.patch('main.solutions', solutions)
-  @mock.patch('main.tasks', tasks)
-  def test_view_task(self):
-    rv = self.client.get(flask.url_for('index', task='HelloStr'))
-    self.assert200(rv)
-    self.assertIn('print', unicode(rv.data, encoding='utf-8'))
-    self.assertIn('fmt.Println', unicode(rv.data, encoding='utf-8'))
-
-  @mock.patch('main.solutions', solutions)
-  @mock.patch('main.tasks', tasks)
   def test_json_tasklist(self):
     rv = self.client.get(flask.url_for('tasklist_json'))
     self.assert200(rv)
@@ -55,14 +35,14 @@ class RosettaTest(TestCase):
   @mock.patch('main.solutions', solutions)
   @mock.patch('main.tasks', tasks)
   def test_json_solutions(self):
-    rv = self.client.get(flask.url_for('solutions_json', simple_title='HelloStr'))
+    rv = self.client.get(flask.url_for('solutions_json', task='HelloStr'))
     self.assert200(rv)
     self.assertEqual(rv.json, dict(solutions=solutions['HelloStr']))
 
   @mock.patch('main.solutions', solutions)
   @mock.patch('main.tasks', tasks)
   def test_missing_json_solutions(self):
-    rv = self.client.get(flask.url_for('solutions_json', simple_title='FourthWalled'))
+    rv = self.client.get(flask.url_for('solutions_json', task='FourthWalled'))
     self.assert404(rv)
 
 

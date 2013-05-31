@@ -1,84 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" ng-app="CodePrettify">
   <head>
     <meta charset="utf-8">
     <title>Rosetta Fight</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <script src="/static/components/angular/angular.min.js"></script>
+    <script src="/static/js/angular_app.js"></script>
     <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <script src="http://twitter.github.io/bootstrap/assets/js/jquery.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-tab.js"></script>
     <!--[if lt IE 9]>
       <script src="http://twitter.github.io/bootstrap/assets/js/html5shiv.js"></script>
     <![endif]-->
-    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script>
-    {% block extra_css %}{% endblock %}
-    {% block extra_js %}{% endblock %}
   </head>
 
-  <body>
+  <body ng-controller="RosettaController">
     <div class="container-fluid">
-    {% block content %}
       <div class="row-fluid">
         <h2>Rosetta Fight</h2>
-        <form class="form-search">
-          <select name="task" class="span3">
-          {% for task in tasks %}
-            <option{% if selected_task == task %} selected{% endif %}>{{ task }}</option>
-          {% endfor %}
-          </select>
-          <button type="submit">Submit</button>
+        <form class="form-search" ng-cloak>
+          <select name="task" class="span3" ng-disabled="tasklist == null" ng-model="taskSelector" ng-options="task for task in tasklist" ng-required ng-cloak></select>
+          <button type="submit" ng-click="retrieveTask()">Submit</button>
         </form>
       </div>
-      <p class="well">
-        <i>Popular problems:</i>
-          {% for task in ['Arrays', 'Assertions', 'Chat server', 'Check that file exists', 'Count occurrences of a substring', 'Factorial', 'FizzBuzz', 'Hello world/Text', 'Hello world/Web server', 'Letter frequency', 'Read entire file', 'Regular expressions', 'Repeat a string', 'String case', 'String interpolation (included)', 'String length'] %}
-          <a href="?task={{task}}">{{ task }}</a>{% if not loop.last %}, {% endif %}
-          {% endfor %}
+      <p ng-show="selectedTask" ng-cloak>
+        Viewing <b>{{ selectedTask }}</b> with solutions in <ng-pluralize count="totalSolutions()" when="{0: 'no languages', 1: 'one language', 'other': '{} languages'}"></ng-pluralize>.
       </p>
-      {% if selected_task %}
-      <p>
-        Viewing <b>{{ selected_task }}</b> which has solutions in {{ task_solutions.__len__() }}  {% if task_solutions > 1 %}different languages{% else %}language{% endif %}.
-      </p>
-      {% endif %}
-      <div class="row-fluid">
+
+      <div class="row-fluid" ng-show="solutions" ng-cloak>
         <div class="span6">
-          {% if codeA %}
           <h3>Python</h3>
-          <ul class="nav nav-tabs">
-            {% for sol in codeA %}
-            <li {% if loop.index == 1 %}class="active"{% endif %}><a href="#python-{{ loop.index }}" data-toggle="tab">Solution #{{ loop.index }}</a></li>
-            {% endfor %}
-          </ul>
-          <div class="tab-content">
-          {% for sol in codeA %}
-            <div class="tab-pane{% if loop.index == 1 %} active{% endif %}" id="python-{{ loop.index }}">
-              <pre class="prettyprint pre-scrollable">{{ sol }}</pre>
-            </div>
-          {% endfor %}
+          <div ng-repeat="sol in solutions['python']">
+            <pre class="prettyprint pre-scrollable" ng-bind-html-unsafe="sol|prettify"></pre>
           </div>
-          {% endif %}
-        </div>
+          <div class="well" ng-show="!solutions['python']">
+            No solutions available.
+          </div>
+        </div><!-- /span6 -->
+
         <div class="span6">
-          {% if codeB %}
           <h3>Go</h3>
-          <ul class="nav nav-tabs">
-            {% for sol in codeB %}
-            <li {% if loop.index == 1 %}class="active"{% endif %}><a href="#go-{{ loop.index }}" data-toggle="tab">Solution #{{ loop.index }}</a></li>
-            {% endfor %}
-          </ul>
-          <div class="tab-content">
-          {% for sol in codeB %}
-            <div class="tab-pane{% if loop.index == 1 %} active{% endif %}" id="go-{{ loop.index }}">
-              <pre class="prettyprint pre-scrollable">{{ sol }}</pre>
-            </div>
-          {% endfor %}
+          <div ng-repeat="sol in solutions['go']">
+            <pre class="prettyprint pre-scrollable" ng-bind-html-unsafe="sol|prettify"></pre>
           </div>
-          {% endif %}
-        </div>
-      </div>
-    {% endblock %}
+          <div class="well" ng-show="!solutions['go']">
+            No solutions available.
+          </div>
+        </div><!-- /span6 -->
+      </div><!-- /row -->
+
     </div>
+
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert&autoload=false"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/prettify.js"></script>
   </body>
 </html>

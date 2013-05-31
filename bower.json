@@ -1,0 +1,14 @@
+{
+  "name": "rosettafight",
+  "version": "0.0.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "angular": "~1.0.7",
+    "angular-mocks": "~1.0.7",
+    "jasmine": "~1.3.1"
+  }
+}

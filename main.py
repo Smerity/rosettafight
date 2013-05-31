@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Dynamic web view for local testing
+Dynamic web view for local testing and generation of static JSON files
 """
 from __future__ import print_function, unicode_literals
 # Python stdlib
@@ -32,12 +32,12 @@ def tasklist_json():
   return flask.jsonify(tasklist=tasks)
 
 
-@app.route('/data/tasks/<simple_title>.json')
-def solutions_json(simple_title):
+@app.route('/data/tasks/<task>.json')
+def solutions_json(task):
   title = None
   for x in tasks:
     h = simple_name(x)
-    if h == simple_title:
+    if h == task:
       title = x
       break
   if title not in solutions:
@@ -46,18 +46,14 @@ def solutions_json(simple_title):
   return flask.jsonify(solutions=sols)
 
 
+@app.route('/test')
+def test():
+  return open('templates/angular_test.html').read()
+
+
 @app.route('/')
 def index():
-  args = {}
-  task = flask.request.args.get('task')
-
-  if task:
-    sols = solutions.get(task)
-    if not sols:
-      return 'No such task exists', 404
-    args['task_solutions'] = sorted(sols)
-    args['codeA'], args['codeB'] = sols.get('python', []), sols.get('go', [])
-  return flask.render_template('base.html', tasks=tasks, selected_task=task, **args)
+  return open('templates/angular.html').read()
 
 if __name__ == '__main__':
   app.run(debug=True)
