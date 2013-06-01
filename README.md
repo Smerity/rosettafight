@@ -33,6 +33,17 @@ Lang: go
 =-=-=-=-=-=-=-=-=-=-
 ```
 
+Development Environment
+-----------------------
+
+To retrieve all the components required for the development environment, install the Python dependencies using [pip](http://www.pip-installer.org/en/latest/) and the web dependencies using [bower](http://bower.io/).
+It may also be useful to install the Python dependencies in a virtualenv.
+
+```bash
+pip install -r requirements.txt
+bower install
+```
+
 Testing
 -------
 
