@@ -48,7 +48,7 @@ def solutions_json(task):
 
 @app.route('/unittest')
 def unittest():
-  return open('templates/angular_test.html').read()
+  return open('templates/angular_unittest.html').read()
 
 
 @app.route('/e2e')
