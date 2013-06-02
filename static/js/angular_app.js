@@ -25,6 +25,14 @@ function RosettaController($scope, $http) {
   //
   $scope.tasklist = null;
   $scope.solutions = null;
+  $scope.availableLanguages = function() {
+    var langs = [];
+    for (key in $scope.solutions) {
+      langs.push(key);
+    }
+    return langs.sort();
+  }
+  $scope.lang = 'python';
 
   $scope.taskUri = function(task) {
       return task.replace(/[^A-Za-z0-9]/g, '');

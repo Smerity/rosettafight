@@ -29,11 +29,14 @@
 
       <div id="solutions" class="row-fluid" ng-show="solutions" ng-cloak>
         <div class="span6">
-          <h3>Python</h3>
-          <div ng-repeat="sol in solutions['python']">
-            <pre class="prettyprint pre-scrollable" ng-bind-html-unsafe="sol|prettify"></pre>
+          <div class="input-prepend" id="languageSelectorArea">
+            <span class="add-on">Languge</span>
+            <select ng-model="lang" ng-options="lang for lang in availableLanguages()"></select>
           </div>
-          <div class="well" ng-show="!solutions['python']">
+          <div ng-repeat="sol in solutions[lang]">
+            <pre class="prettyprint pre-scrollable" ng-bind-html-unsafe="sol|escapeHTML|prettify"></pre>
+          </div>
+          <div class="well" ng-show="!solutions[lang]">
             No solutions available.
           </div>
         </div><!-- /span6 -->
@@ -41,7 +44,7 @@
         <div class="span6">
           <h3>Go</h3>
           <div ng-repeat="sol in solutions['go']">
-            <pre class="prettyprint pre-scrollable" ng-bind-html-unsafe="sol|prettify"></pre>
+            <pre class="prettyprint pre-scrollable" ng-bind-html-unsafe="sol|escapeHTML|prettify"></pre>
           </div>
           <div class="well" ng-show="!solutions['go']">
             No solutions available.
