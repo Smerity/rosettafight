@@ -33,10 +33,10 @@ describe('Test Angular in Rosetta Fight', function() {
     $httpBackend.flush(1);
 
     // We expect the GET requests for the task's solutions
-    $httpBackend.when('GET', '/data/tasks/01Knapsack.json').respond(
+    // By using expect instead of when, it responds to a single request and the order matters
+    $httpBackend.expect('GET', '/data/tasks/01Knapsack.json').respond(
       {solutions: {python: ['print', 'sys.stdout'], go: ['fmt.Println']}}
     );
-    $httpBackend.expectGET('/data/tasks/01Knapsack.json');
 
     scope.taskSelector = '0/1-Knapsack';
     scope.retrieveTask();
