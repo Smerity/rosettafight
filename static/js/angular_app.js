@@ -1,8 +1,21 @@
-angular.module('CodePrettify', [])
+angular.module('RosettaFight', [])
 .filter('prettify', function() {
   return function(input) {
     return prettyPrintOne(input);
   };
+})
+.filter('escapeHTML', function() {
+  return function(text) {
+    if (text) {
+      return text.
+          replace(/&/g, '&amp;').
+          replace(/</g, '&lt;').
+          replace(/>/g, '&gt;').
+          replace(/'/g, '&#39;').
+          replace(/"/g, '&quot;');
+    }
+    return '';
+  }
 });
 
 function RosettaController($scope, $http) {
