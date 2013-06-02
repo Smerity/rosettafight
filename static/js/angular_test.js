@@ -26,8 +26,6 @@ describe('Test Angular in Rosetta Fight', function() {
     expect(scope.tasklist).toEqual(['Addition', '0/1-Knapsack', 'Pythagoras', 'Vigenere']);
   }));
 
-  // TODO: Full browser end-to-end test
-
   it('should request solutions if selecting a task to view', inject(function() {
     // AJAX: tasklist.json
     $httpBackend.flush(1);

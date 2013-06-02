@@ -18,16 +18,16 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <h2>Rosetta Fight</h2>
-        <form class="form-search" ng-cloak>
-          <select name="task" class="span3" ng-disabled="tasklist == null" ng-model="taskSelector" ng-options="task for task in tasklist" ng-required ng-cloak></select>
+        <form id="taskSelectorArea" class="form-search" ng-cloak>
+          <select class="span3" ng-disabled="tasklist == null" ng-model="taskSelector" ng-options="task for task in tasklist" ng-required ng-cloak></select>
           <button type="submit" ng-click="retrieveTask()">Submit</button>
         </form>
       </div>
-      <p ng-show="selectedTask" ng-cloak>
+      <p id="taskDescription" ng-show="selectedTask" ng-cloak>
         Viewing <b>{{ selectedTask }}</b> with solutions in <ng-pluralize count="totalSolutions()" when="{0: 'no languages', 1: 'one language', 'other': '{} languages'}"></ng-pluralize>.
       </p>
 
-      <div class="row-fluid" ng-show="solutions" ng-cloak>
+      <div id="solutions" class="row-fluid" ng-show="solutions" ng-cloak>
         <div class="span6">
           <h3>Python</h3>
           <div ng-repeat="sol in solutions['python']">

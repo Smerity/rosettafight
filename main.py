@@ -46,9 +46,14 @@ def solutions_json(task):
   return flask.jsonify(solutions=sols)
 
 
-@app.route('/test')
-def test():
+@app.route('/unittest')
+def unittest():
   return open('templates/angular_test.html').read()
+
+
+@app.route('/e2e')
+def e2e():
+  return open('templates/angular_e2e.html').read()
 
 
 @app.route('/')
