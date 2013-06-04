@@ -59,10 +59,13 @@ function RosettaController($scope, $http) {
 
 // JS, you make it hard for me to like you
 // http://stackoverflow.com/questions/5223/length-of-javascript-object-ie-associative-array
-Object.size = function(obj) {
-  var size = 0, key;
+Object.keys = function(obj) {
+  var keys = [];
   for (key in obj) {
-    if (obj.hasOwnProperty(key)) size++;
+    keys.push(key);
   }
-  return size;
+  return keys;
+};
+Object.size = function(obj) {
+  return Object.keys(obj).length;
 };

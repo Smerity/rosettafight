@@ -1,5 +1,25 @@
 'use strict';
 
+describe('Test Object extensions', function() {
+  var pokemon = {charmander:'fire', squirtle:'water', bulbasaur:'grass'};
+
+  it('should have the correct set of keys for associative arrays', function() {
+    var emptyAssoc = {};
+    var complexAssoc = {tree:{branch:'left'}}
+    expect(Object.keys(emptyAssoc).sort()).toEqual([]);
+    expect(Object.keys(complexAssoc).sort()).toEqual(['tree']);
+    expect(Object.keys(pokemon).sort()).toEqual(['bulbasaur', 'charmander', 'squirtle']);
+  });
+
+  it('should have the correct size of an array', function() {
+    var noAnimals = [];
+    var animals = ['cat', 'dog', 'horse', 'dolphin'];
+    expect(Object.size(noAnimals)).toEqual(0);
+    expect(Object.size(animals)).toEqual(4);
+    expect(Object.size(pokemon)).toEqual(3);
+  });
+});
+
 describe('Test Angular in Rosetta Fight', function() {
   var scope, ctrl, $httpBackend;
 
