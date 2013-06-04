@@ -38,7 +38,7 @@ function RosettaController($scope, $http) {
   // Retrieve and populate the solutions for a specific task
   $scope.retrieveTask = function() {
     $scope.selectedTask = $scope.taskSelector;
-    $http.get('/data/tasks/' + $scope.taskUri($scope.selectedTask) + '.json').then(
+    $http.get('/data/tasks/' + $scope.taskUri($scope.selectedTask) + '.json', {cache:true}).then(
       function(resp) {
         $scope.solutions = resp.data['solutions'];
       }
@@ -46,7 +46,7 @@ function RosettaController($scope, $http) {
   }
 
   // Load the initial tasklist on start-up
-  $http.get('/data/tasklist.json').then(
+  $http.get('/data/tasklist.json', {cache:true}).then(
     function(resp) {
       $scope.tasklist = resp.data['tasklist'];
     }
