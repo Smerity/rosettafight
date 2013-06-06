@@ -1,4 +1,4 @@
-angular.module('RosettaFight', [])
+var RosettaApp = angular.module('RosettaFight', [])
 .filter('prettify', function() {
   return function(input) {
     return prettyPrintOne(input);
@@ -38,6 +38,8 @@ function RosettaController($scope, $http) {
   // Retrieve and populate the solutions for a specific task
   $scope.retrieveTask = function() {
     $scope.selectedTask = $scope.taskSelector;
+    // Empty task -- just ignore the request
+    if ($scope.selectedTask === null) return;
     $http.get('/data/tasks/' + $scope.taskUri($scope.selectedTask) + '.json', {cache:true}).then(
       function(resp) {
         $scope.solutions = resp.data['solutions'];

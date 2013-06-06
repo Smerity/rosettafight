@@ -46,6 +46,13 @@ describe('Test Angular in Rosetta Fight', function() {
     expect(scope.tasklist).toEqual(['Addition', '0/1-Knapsack', 'Pythagoras', 'Vigenere']);
   }));
 
+  it('should not fail when selecting an empty task', inject(function() {
+    // We expect just the one AJAX call to tasklist.json
+    $httpBackend.flush(1);
+    scope.taskSelector = null;
+    scope.retrieveTask();
+  }));
+
   it('should request solutions if selecting a task to view', inject(function() {
     // AJAX: tasklist.json
     $httpBackend.flush(1);
