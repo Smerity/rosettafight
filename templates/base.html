@@ -32,8 +32,15 @@
           <span class="add-on">Languge</span>
           <select ng-model="lang" ng-options="lang for lang in availableLanguages()"></select>
         </div>
+        <ul class="nav nav-tabs">
+          <li ng-click="activateSolution($index)" ng-class="{active: $parent.solutionId == $index}" ng-repeat="sol in solutions[lang]">
+            <a href="">
+              Solution #{{ $index+1 }}
+            </a>
+          </li>
+        </ul>
         <div ng-repeat="sol in solutions[lang]">
-          <pre class="prettyprint pre-scrollable" ng-bind-html-unsafe="sol|escapeHTML|prettify"></pre>
+          <pre class="prettyprint pre-scrollable" ng-show="$parent.solutionId == $index" ng-bind-html-unsafe="sol|escapeHTML|prettify"></pre>
         </div>
         <div class="well" ng-show="!solutions[lang]">
           No solutions available.

@@ -58,6 +58,13 @@ function RosettaController($scope, $http) {
 // The 'mini' controller that specifies the language solutions to show for the CodeView
 function CodeViewController($scope) {
   $scope.lang = $scope.startLang;
+  // Current solution being viewed
+  $scope.solutionId = 0;
+  $scope.activateSolution = function(solutionId) {
+    $scope.solutionId = solutionId;
+  }
+  // Reset to the first solution if the task changes
+  $scope.$watch('selectedTask', function() {$scope.solutionId = 0;});
 }
 
 // JS, you make it hard for me to like you
