@@ -71,4 +71,18 @@ describe('Test Angular in Rosetta Fight', function() {
     expect(scope.selectedTask).toEqual('0/1-Knapsack');
     expect(scope.solutions).toEqual({python: ['print', 'sys.stdout'], go: ['fmt.Println']});
   }));
+
+  it('should update the currently viewed solution when requested', inject(function($controller) {
+    scope.selectedTask = 'Squirtle';
+    var subScope = scope.$new();
+    var codeCtrl = $controller(CodeViewController, {$scope: subScope});
+    expect(subScope.solutionId).toEqual(0);
+    subScope.activateSolution(42);
+    expect(subScope.solutionId).toEqual(42);
+    // Solution ID should drop to zero when the selectedTask changes
+    scope.selectedTask = 'Blastoise';
+    // Trigger the update as it was performed 'outside' of the Angular framework
+    scope.$apply();
+    expect(subScope.solutionId).toEqual(0);
+  }));
 });

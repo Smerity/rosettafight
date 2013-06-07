@@ -25,4 +25,11 @@ describe('RosettaFight E2E Test', function() {
     // Ensure escaping works properly -- should have escaped #include <stdlib.h>
     expect(element('pre.prettyprint:first').html()).toContain('&lt;stdlib.h&gt;');
   });
+
+  it('should allow selecting a different solution', function() {
+    select('taskSelector').option('100 doors');
+    element('#taskSelectorArea button').click();
+    expect(element('#code-0 li.active').count()).toBe(1);
+    // TODO: Ensure that eq(0).hasClass(active), change to element #1, repeat test
+  });
 });
