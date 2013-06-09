@@ -21,7 +21,7 @@ describe('RosettaFight E2E Test', function() {
     element('#taskSelectorArea button').click();
     // This test will fail due to a bug I've found in Angular Scenario's DSL for select-option
     // Sending pull request to resolve this issue -- but my test is correct!
-    select('lang').option('c');
+    select('$parent.lang').option('c');
     // Ensure escaping works properly -- should have escaped #include <stdlib.h>
     expect(element('pre.prettyprint:first').html()).toContain('&lt;stdlib.h&gt;');
   });
