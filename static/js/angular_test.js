@@ -74,15 +74,27 @@ describe('Test Angular in Rosetta Fight', function() {
 
   it('should update the currently viewed solution when requested', inject(function($controller) {
     scope.selectedTask = 'Squirtle';
+
     var subScope = scope.$new();
+    subScope.lang = 'Python';
     var codeCtrl = $controller(CodeViewController, {$scope: subScope});
+
+    // It should start at zero and then change to the solution you request
+    // Note: It doesn't ensure the given solution number exists
     expect(subScope.solutionId).toEqual(0);
     subScope.activateSolution(42);
     expect(subScope.solutionId).toEqual(42);
-    // Solution ID should drop to zero when the selectedTask changes
+
+    // Solution ID should drop to zero when the selectedTask in RosettaController changes
     scope.selectedTask = 'Blastoise';
-    // Trigger the update as it was performed 'outside' of the Angular framework
-    scope.$apply();
+    scope.$apply(); // Trigger the update as it was performed 'outside' of the Angular framework
+    expect(subScope.solutionId).toEqual(0);
+
+    // Solution ID should drop to zero if you change language in the CodeViewController
+    subScope.activateSolution(42);
+    expect(subScope.solutionId).toEqual(42);
+    subScope.lang = 'Javascript';
+    subScope.$apply();
     expect(subScope.solutionId).toEqual(0);
   }));
 });

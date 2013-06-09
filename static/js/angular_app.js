@@ -63,8 +63,11 @@ function CodeViewController($scope) {
   $scope.activateSolution = function(solutionId) {
     $scope.solutionId = solutionId;
   }
-  // Reset to the first solution if the task changes
+  // Reset to the first solution if the task or language changes
   $scope.$watch('selectedTask', function() {$scope.solutionId = 0;});
+  // Note: select needs to have ng-model set to "$parent.lang", not "lang", as child scope is created
+  // See: https://github.com/angular-ui/ui-select2/issues/14
+  $scope.$watch('lang', function() {$scope.solutionId = 0;});
 }
 
 // JS, you make it hard for me to like you

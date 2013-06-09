@@ -30,7 +30,7 @@
       <script type="text/ng-template" id="partial_solutions_lang">
         <div class="input-prepend" id="languageSelectorArea">
           <span class="add-on">Languge</span>
-          <select ng-model="lang" ng-options="lang for lang in availableLanguages()"></select>
+          <select ng-model="$parent.lang" ng-options="lang for lang in availableLanguages()"></select>
         </div>
         <ul class="nav nav-tabs">
           <li ng-click="activateSolution($index)" ng-class="{active: $parent.solutionId == $index}" ng-repeat="sol in solutions[lang]">
